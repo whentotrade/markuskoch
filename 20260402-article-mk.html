@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zyklusanalyse täglich – 360° Wallstreet by Markus Koch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   360° Wallstreet Design System – Zyklusanalyse Embed
+   Colors sourced from 360wallstreet.de
+   ============================================================ */
+:root {
+  --w-bg:          #FFFDF7;
+  --w-navy:        #140B59;
+  --w-yellow:      #FFD11A;
+  --w-gray-light:  #F3F3F6;
+  --w-gray-mid:    #E8E8F0;
+  --w-white:       #FFFFFF;
+  --w-text:        #140B59;
+  --w-muted:       #6B6B8D;
+  --w-font-head:   'Montserrat', sans-serif;
+  --w-font-body:   'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--w-bg);
+  margin: 0;
+  padding: 0;
+}
+
+.wk-article {
+  background: var(--w-bg);
+  color: var(--w-text);
+  font-family: var(--w-font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 32px 56px;
+}
+
+.wk-header {
+  background: var(--w-navy);
+  border-radius: 12px;
+  padding: 32px 36px 28px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wk-header::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(255,209,26,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.wk-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--w-yellow);
+  color: var(--w-navy);
+  font-family: var(--w-font-head);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.wk-date {
+  font-family: var(--w-font-body);
+  font-size: 12px;
+  color: rgba(255,253,247,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+}
+
+.wk-title {
+  font-family: var(--w-font-head);
+  font-size: 24px;
+  font-weight: 300;
+  color: #FFFDF7;
+  line-height: 1.35;
+}
+
+.wk-title strong {
+  font-weight: 700;
+  color: var(--w-yellow);
+}
+
+.wk-body p {
+  font-family: var(--w-font-body);
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--w-text);
+  margin-bottom: 22px;
+}
+
+.wk-body h3 {
+  font-family: var(--w-font-head);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--w-navy);
+  margin: 40px 0 18px;
+  padding-left: 14px;
+  border-left: 4px solid var(--w-yellow);
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wk-table-wrap {
+  margin: 0 0 28px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 16px rgba(20,11,89,0.10);
+  border: 1px solid var(--w-gray-mid);
+}
+
+.wk-table-head {
+  background: var(--w-navy);
+  padding: 14px 18px 4px;
+}
+
+.wk-table-title {
+  font-family: var(--w-font-head);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--w-white);
+  letter-spacing: 0.03em;
+}
+
+.wk-table-subtitle {
+  font-family: var(--w-font-body);
+  font-size: 12px;
+  color: rgba(255,253,247,0.55);
+  padding: 4px 0 12px;
+}
+
+.wk-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--w-font-body);
+  font-size: 13px;
+  background: var(--w-white);
+}
+
+.wk-table-wrap thead tr { background: rgba(20,11,89,0.05); }
+
+.wk-table-wrap thead th {
+  padding: 9px 13px;
+  text-align: left;
+  border-bottom: 2px solid var(--w-gray-mid);
+  font-family: var(--w-font-head);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--w-navy);
+  white-space: nowrap;
+}
+
+.wk-table-wrap tbody tr { font-weight: 600; color: var(--w-navy); }
+.wk-table-wrap tbody tr:nth-child(odd)  { background: var(--w-white); }
+.wk-table-wrap tbody tr:nth-child(even) { background: var(--w-gray-light); }
+.wk-table-wrap tbody tr:hover           { background: rgba(255,209,26,0.13); }
+
+.wk-table-wrap tbody td {
+  padding: 8px 13px;
+  border-bottom: 1px solid var(--w-gray-mid);
+  vertical-align: middle;
+}
+
+.wk-table-wrap tbody tr:last-child td { border-bottom: none; }
+
+.wk-score-wrap { display: flex; align-items: center; gap: 8px; }
+.wk-score-bar  { height: 13px; border-radius: 3px; flex-shrink: 0; }
+
+.wk-table-footer {
+  font-family: var(--w-font-body);
+  font-size: 11px;
+  color: var(--w-muted);
+  padding: 9px 18px 11px;
+  background: rgba(243,243,246,0.7);
+  border-top: 1px solid var(--w-gray-mid);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wk-source-tag {
+  display: inline-block;
+  background: var(--w-yellow);
+  color: var(--w-navy);
+  font-family: var(--w-font-head);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.wk-divider { border: none; border-top: 1px solid var(--w-gray-mid); margin: 40px 0; }
+
+.wk-legal {
+  font-family: var(--w-font-body);
+  font-size: 11.5px;
+  color: var(--w-muted);
+  line-height: 1.75;
+  padding: 22px 26px;
+  background: var(--w-gray-light);
+  border-radius: 8px;
+  border-left: 3px solid var(--w-gray-mid);
+}
+</style>
+</head>
+<body>
+
+<div class="wk-article">
+
+  <div class="wk-header">
+    <div class="wk-label">⬡ Zyklusanalyse · cycles.org</div>
+    <div class="wk-date">2. April 2026 &nbsp;·&nbsp; Tagesanalyse</div>
+    <h2 class="wk-title">Technische Gegenbewegung an der Wall Street – <strong>Öl fällt Richtung 100 Dollar</strong>, zwölf Assets in der Bodenbildungszone</h2>
+  </div>
+
+  <div class="wk-body">
+
+    <p>An der Wall Street setzte sich am Mittwoch die Erholungsbewegung fort – gemessener als am Vortag, aber erneut freundlich. Der S&amp;P 500 gewann +0,72&nbsp;%, der Nasdaq +1,16&nbsp;% und der Dow +0,48&nbsp;%. Der Auslöser blieb derselbe: weitere Signale aus Washington und Teheran, dass die US-Militärbeteiligung im Iran-Konflikt dem Ende entgegengeht. Trump deutete öffentlich an, das US-Engagement könnte innerhalb von zwei bis drei Wochen beendet sein. Irans Präsident Pezeshkian erklärte, sein Land habe „den notwendigen Willen, diesen Krieg zu beenden." Ein Bericht von Politico kurz vor Börsenschluss ließ zudem verlauten, dass Trump seine Abendansprache nutzen würde, um das Ende der US-Beteiligung zu erklären – die Kontrolle über die Straße von Hormuz soll anderen Nationen überlassen werden. Öl-Futures reagierten deutlich: Brent verbilligte sich um rund 3&nbsp;% auf etwas über 100 US-Dollar je Barrel, WTI settlte knapp unter der Marke. Technologie und Halbleiter führten die Aufwärtsbewegung an. Der Energiesektor gab nach – zum zweiten Mal in Folge –, obwohl der Rohölpreis auf historisch erhöhtem Niveau verbleibt.</p>
+
+    <p>Die Erholung vollzieht sich vor dem Hintergrund institutioneller Vorsicht. Der 200-Tage-Gleitende Durchschnitt im S&amp;P 500 liegt noch weit über den aktuellen Kursniveaus, und die Gegenbewegung ist technisch als Kontratrend-Rally einzustufen, nicht als Bestätigung eines neuen Aufwärtstrends. Das Zyklusmodell zeichnet ein dazu konsistentes Bild: Die Bodenbildungssignale, die bereits vor dem Handelstag am Dienstag vorlagen, haben sich in ihrer Richtung nicht verändert – sie beschreiben zyklische Bedingungen für ein mögliches Tief, keine bestätigte Trendwende. Zwölf Assets befinden sich heute auf der bullischen Seite in der kritischen Zone, gegenüber fünf beim letzten Schlusskurs. Auf der Topbildungsseite liefert der Energiesektor seit zwei Handelstagen in Folge preisseitige Bestätigung gegen ein Warnsignal, das bereits im Vorfeld vorlag: S&amp;P 500 Energy weist mit einem Zyklus Konsens Wert von -93 das höchste bärische Signal im heutigen Scan aus, gleichauf mit dem US-Dollar-Index. Die anhaltende Dollar-Schwäche und der Rückgang im Ölpreis verleihen den Zyklusausrichtungen, die das Modell bereits beschrieben hatte, sukzessive preisseitige Substanz. Der Rest ist zweitrangig.</p>
+
+    <p>Die nachfolgende Zyklusanalyse filtert rund 45 internationale Kernassets nach statistisch relevanten zyklischen Wendepunkten. Der Zyklus Konsens Wert bewegt sich zwischen -100 (maximale bärische Ausrichtung) und +100 (maximale bullische Ausrichtung). Assets bei oder jenseits von ±60 befinden sich in der kritischen Zone, in der die zyklischen Bedingungen für einen Trendwechsel statistisch erhöht sind. Die cRSI-Spalte beschreibt den Abbau des laufenden Trends in drei Stufen: von Exhaustion (maximale Überdehnung, frühzeitige Warnung) über Fatigue (beginnende Umkehr) bis zum Exit, der bestätigten Impulsumkehr.</p>
+
+    <h3>Bodenbildungs-Zyklen</h3>
+
+    <div class="wk-table-wrap">
+      <div class="wk-table-head">
+        <div class="wk-table-title">Bullish Cycle Consensus</div>
+        <div class="wk-table-subtitle">Bottoming cycles with technically tired bears. Possible &ldquo;buy long&rdquo; setups.</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Asset</th><th>Consensus Score</th><th>Cycles</th><th>cRSI Signal</th><th>Cycle Length</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Hang Seng Index</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:100px;background:#22c55e;"></div><span>100</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:1;border-radius:1px;"></span></span><span style="font-size:12px;">bear exit</span></span></td><td>107</td><td>2026-04-02</td></tr>
+          <tr><td>2</td><td>Euro FX Futures</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:100px;background:#22c55e;"></div><span>100</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:1;border-radius:1px;"></span></span><span style="font-size:12px;">bear exit</span></span></td><td>306</td><td>2026-04-02</td></tr>
+          <tr><td>3</td><td>German DAX</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:93px;background:#22c55e;"></div><span>93</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bear fatigue</span></span></td><td>295</td><td>2026-04-01</td></tr>
+          <tr><td>4</td><td>Palladium Futures</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:93px;background:#22c55e;"></div><span>93</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bear fatigue</span></span></td><td>140</td><td>2026-04-01</td></tr>
+          <tr><td>5</td><td>BRICS iShares BIC 50 ETF</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:89px;background:#22c55e;"></div><span>89</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bear fatigue</span></span></td><td>166</td><td>2026-04-01</td></tr>
+          <tr><td>6</td><td>Gold Mining Junior ETF</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:85px;background:#22c55e;"></div><span>85</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:1;border-radius:1px;"></span></span><span style="font-size:12px;">bear exit</span></span></td><td>88</td><td>2026-04-01</td></tr>
+          <tr><td>7</td><td>Nasdaq 100</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:82px;background:#22c55e;"></div><span>82</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bear fatigue</span></span></td><td>191</td><td>2026-04-01</td></tr>
+          <tr><td>8</td><td>Ethereum/USD</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:80px;background:#22c55e;"></div><span>80</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="color:#ccc;font-size:11px;">—</span><span style="font-size:12px;">neutral</span></span></td><td>281</td><td>2026-04-02</td></tr>
+          <tr><td>9</td><td>Nasdaq Composite</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:80px;background:#22c55e;"></div><span>80</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bear fatigue</span></span></td><td>192</td><td>2026-04-01</td></tr>
+          <tr><td>10</td><td>Wilshire 5000</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:79px;background:#22c55e;"></div><span>79</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bear fatigue</span></span></td><td>79</td><td>2026-03-31</td></tr>
+          <tr><td>11</td><td>Solana/USD</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:63px;background:#22c55e;"></div><span>63</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="color:#ccc;font-size:11px;">—</span><span style="font-size:12px;">neutral</span></span></td><td>286</td><td>2026-04-02</td></tr>
+          <tr><td>12</td><td>Gold Futures</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:63px;background:#22c55e;"></div><span>63</span></div></td><td><span style="color:#22c55e;font-size:13px;letter-spacing:1px;">▲▲▲</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#22c55e;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#22c55e;opacity:1;border-radius:1px;"></span></span><span style="font-size:12px;">bear exit</span></span></td><td>92</td><td>2026-04-02</td></tr>
+        </tbody>
+      </table>
+      <div class="wk-table-footer">
+        <span class="wk-source-tag">cycles.org</span>
+        Scores ≥ 60 oder ≤ −60 markieren die kritische Zone für zyklische Wendepunkte. Score-Bereich: −100 (extrem bärisch) bis +100 (extrem bullisch). Quelle: Lars von Thienen · cycles.org
+      </div>
+    </div>
+
+    <p>Das Bodenbildungsbild des heutigen Scans ist in seiner Breite ungewöhnlich: Zwölf Assets befinden sich in der kritischen Zone, verteilt über asiatische und europäische Indizes, US-amerikanische Marktindizes, Edelmetall-Miner, Schwellenländer-ETFs und Kryptowährungen. Euro-FX-Futures und der Hang Seng Index erreichen beide den Maximalwert von +100 mit einer bear exit-Signalgebung, was bedeutet, dass der Abwärtsimpuls die untere cRSI-Begrenzungszone nach oben durchbrochen hat – die bärische Kursbewegung befindet sich nicht mehr im Aufbau, sondern im Auslaufen. Der Unterschied liegt in der zyklischen Übereinstimmung: Euro-FX-Futures basiert auf vier konvergierenden Zyklen des 306-Tage-Zyklus – die höchste zyklische Übereinstimmung, die das Zyklusmodell ausweisen kann –, während der Hang Seng auf zwei konvergierenden Zyklen eines 107-Tage-Zyklus beruht. Dasselbe Signal, aber mit unterschiedlicher struktureller Tiefe.</p>
+
+    <p>Der Deutsche DAX tritt als Neueintrag in die Bodenbildungstabelle ein – mit einem Zyklus Konsens Wert von +93, bear fatigue auf fünf konvergierenden Zyklen eines 295-Tage-Zyklus. Fünf Zyklen stellen den höchsten Wert im gesamten heutigen Scan dar. Bear fatigue zeigt an, dass der Abwärtsimpuls aus der überverkauften Zone zurückzufallen beginnt, ohne die untere Begrenzung bereits nach oben zu durchbrechen. Auf einer 295-Tage-Periodizität sind das strukturelle Wendepunkte, keine kurzfristigen Korrekturen. Das sollte man ernst nehmen. Palladium-Futures (Zyklus Konsens Wert +93, bear fatigue, drei Zyklen, 140-Tage-Zyklus) und der BRICS iShares BIC 50 ETF (+89, bear fatigue, drei Zyklen, 166-Tage-Zyklus) ergänzen das Bild auf der Rohstoff- und Schwellenländerseite.</p>
+
+    <p>Die drei großen US-Marktindizes sind allesamt in der kritischen Zone: Nasdaq 100 (+82, bear fatigue, drei Zyklen, 191-Tage-Zyklus), Nasdaq Composite (+80, bear fatigue, drei Zyklen, 192-Tage-Zyklus) und Wilshire 5000 (+79, bear fatigue, drei Zyklen, 79-Tage-Zyklus). Diese Einträge lagen vor den Handelssitzungen am Dienstag und Mittwoch bereits im Modell. Die Kursgewinne der letzten zwei Tage vollziehen sich damit in Übereinstimmung mit zyklischen Bodenbildungssignalen, die das Zyklusmodell im Vorfeld beschrieben hatte. Gold Mining Junior ETF (+85, bear exit, drei Zyklen, 88-Tage-Zyklus) und Gold Futures (+63, bear exit, drei Zyklen, 92-Tage-Zyklus) liefern zwei kongruente Einträge aus dem Edelmetallsegment. Ethereum (+80, 281-Tage-Zyklus) und Solana (+63, 286-Tage-Zyklus) weisen zwar die erforderliche zyklische Ausrichtung auf, verfügen jedoch über einen neutralen cRSI – die Impulsbestätigung steht in beiden Fällen aus. Risikomanagement bleibt entscheidend.</p>
+
+    <h3>Topbildungs-Zyklen</h3>
+
+    <div class="wk-table-wrap">
+      <div class="wk-table-head">
+        <div class="wk-table-title">Bearish Cycle Consensus</div>
+        <div class="wk-table-subtitle">Topping cycles with technically tired bulls. Possible &ldquo;sell short&rdquo; setups.</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Asset</th><th>Consensus Score</th><th>Cycles</th><th>cRSI Signal</th><th>Cycle Length</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>S&amp;P 500 Energy</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:93px;background:#ef4444;"></div><span>-93</span></div></td><td><span style="color:#ef4444;font-size:13px;letter-spacing:1px;">▼▼▼</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#ef4444;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#ef4444;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#ef4444;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bull fatigue</span></span></td><td>164</td><td>2026-04-01</td></tr>
+          <tr><td>2</td><td>US Dollar Index</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:93px;background:#ef4444;"></div><span>-93</span></div></td><td><span style="color:#ef4444;font-size:13px;letter-spacing:1px;">▼▼▼▼</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#ef4444;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#ef4444;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#ef4444;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bull fatigue</span></span></td><td>306</td><td>2026-04-02</td></tr>
+          <tr><td>3</td><td>Oil Futures</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:87px;background:#ef4444;"></div><span>-87</span></div></td><td><span style="color:#ef4444;font-size:13px;letter-spacing:1px;">▼▼▼▼</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;vertical-align:middle;"><span style="display:inline-block;width:4px;height:5px;background:#ef4444;opacity:1;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:9px;background:#ef4444;opacity:0.2;border-radius:1px;"></span><span style="display:inline-block;width:4px;height:13px;background:#ef4444;opacity:0.2;border-radius:1px;"></span></span><span style="font-size:12px;">bull exhaustion</span></span></td><td>173</td><td>2026-04-02</td></tr>
+          <tr><td>4</td><td>Soybean Futures</td><td><div class="wk-score-wrap"><div class="wk-score-bar" style="width:66px;background:#ef4444;"></div><span>-66</span></div></td><td><span style="color:#ef4444;font-size:13px;letter-spacing:1px;">▼▼▼</span></td><td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="color:#ccc;font-size:11px;">—</span><span style="font-size:12px;">neutral</span></span></td><td>242</td><td>2026-04-01</td></tr>
+        </tbody>
+      </table>
+      <div class="wk-table-footer">
+        <span class="wk-source-tag">cycles.org</span>
+        Scores ≥ 60 oder ≤ −60 markieren die kritische Zone für zyklische Wendepunkte. Score-Bereich: −100 (extrem bärisch) bis +100 (extrem bullisch). Quelle: Lars von Thienen · cycles.org
+      </div>
+    </div>
+
+    <p>Die Topbildungstabelle wird heute von zwei Instrumenten mit einem Zyklus Konsens Wert von -93 angeführt: S&amp;P 500 Energy und dem US-Dollar-Index. Beide sind Neuzugänge in der kritischen Zone. Der US-Dollar-Index weist bull fatigue auf vier konvergierenden Zyklen des 306-Tage-Zyklus aus – dieselbe Periodizität, die Euro-FX-Futures gleichzeitig auf den Maximalwert von +100 mit bear exit geführt hat. Dieser 306-Tage-Zyklus beschreibt keine kurzfristige Schwingung, sondern einen strukturellen Wendepunkt. Die Dollar-Schwäche am Mittwoch stellt die erste preisseitige Bestätigung dieser Zyklusausrichtung dar. Die Asymmetrie liegt auf Seiten des Euro. Der Rest ist zweitrangig.</p>
+
+    <p>Der S&amp;P 500 Energy-Sektor tritt mit einem Zyklus Konsens Wert von -93 und bull fatigue auf drei konvergierenden Zyklen eines 164-Tage-Zyklus in die Topbildungstabelle ein. Der Energiesektor gab am Mittwoch zum zweiten Mal in Folge nach, während der Gesamtmarkt zulegte – eine Sektordivergenz, die das Zyklusmodell bereits beschrieben hatte, bevor die Kursbewegung eintrat. Öl-Futures verbleiben mit einem Zyklus Konsens Wert von -87 und bull exhaustion auf vier konvergierenden Zyklen eines 173-Tage-Zyklus im Topbildungsbereich. Brent fiel am Mittwoch um rund 3&nbsp;% auf knapp über 100 US-Dollar je Barrel – ein zweiter Handelstag mit preisseitiger Bewegung in Richtung des Zykluswarnsignals. Der politische Katalysator, Trumps Ankündigung eines Rückzugs aus dem Iran-Konflikt, ist in die Richtung eingetroffen, auf die das Modell bereits zuvor gezeigt hatte. Es spricht einiges dafür, dass sich hier eine zyklische Trendwende anbahnt. Sojabohnen-Futures (-66, neutraler cRSI, drei Zyklen, 242-Tage-Zyklus) befinden sich zwar in der kritischen Zone, die Impulsbestätigung durch den cRSI steht jedoch aus.</p>
+
+    <h3>Zusammenfassung</h3>
+
+    <p>Das strukturell bedeutendste Signal des heutigen Scans ist erneut die Dollar-Euro-Konstellation auf dem 306-Tage-Zyklus. Dieselbe Periodizität führt Euro-FX-Futures mit einem Zyklus Konsens Wert von +100 und bear exit sowie den US-Dollar-Index mit einem Zyklus Konsens Wert von -93 und bull fatigue gleichzeitig an ihre jeweiligen Extremwerte – jeweils auf vier konvergierenden Zyklen. Die Dollar-Schwäche am Mittwoch liefert die erste preisseitige Bestätigung. Auf der Bodenbildungsseite hat sich das Universum auf zwölf Assets ausgeweitet, darunter alle drei großen US-Marktindizes, europäische und asiatische Indizes, Edelmetall-Miner sowie Kryptowährungen. Die Kursgewinne der letzten beiden Handelstage vollziehen sich in Übereinstimmung mit Zyklusausrichtungen, die das Zyklusmodell bereits zuvor beschrieben hatte. Der 200-Tage-Durchschnitt im S&amp;P 500 liegt noch weit über den aktuellen Kursniveaus – das Zyklusmodell löst diese Frage nicht. Es ermöglicht einen Blick auf den möglichen zukünftigen Verlauf der Kursentwicklung, indem es beschreibt, wann die statistischen Bedingungen für eine Trendwende erhöht sind. Diese Bedingungen sind heute vorhanden. Ob sich daraus bestätigte Wendepunkte entwickeln, entscheidet der Preis in den nächsten Handelssitzungen. Risikomanagement bleibt entscheidend.</p>
+
+    <hr class="wk-divider">
+
+    <div class="wk-legal">
+      Die Zyklusanalysen wurden mit freundlicher Unterstützung der Foundation for the Study of Cycles erstellt „FSC". (<a href="https://www.cycles.org" style="color:var(--w-navy);">www.cycles.org</a>)<br><br>
+      Kopien, auch auszugsweise, nur mit ausdrücklicher Genehmigung oder zu Zitatzwecken und unter Angabe der Quelle.<br><br>
+      Die Mitteilungen im „Zyklusreport" sind unabhängig. Sie beruhen auf Quellen, die wir für vertrauenswürdig und zuverlässig halten. Wir übernehmen keine Haftung für Informationen, die von Dritten zur Verfügung gestellt werden, und haften nicht für finanzielle Verluste, die ihnen in Zukunft aufgrund dieser Informationen entstehen könnten. Trotz sorgfältiger Bearbeitung können wir nicht für die Richtigkeit der Informationen und Berechnungen der FSC garantieren. Alle Darstellungen und Äußerungen dienen nur zu Informationszwecken. Sie stellen keine Aufforderung zum Abschluss einer Transaktion dar. Die vorgestellten Strategien sind auch nicht als Aufforderung zu verstehen, ihnen zu folgen. Die dargestellten Meinungen, Strategien und Informationen sind nicht als allgemeine oder persönliche Ratschläge zu verstehen, sondern geben lediglich die Meinung der Redaktion wieder.<br><br>
+      Darüber hinaus möchten wir darauf hinweisen, dass der Handel mit Aktien, Anleihen, Zertifikaten, Optionen, Optionsscheinen und anderen Finanzinstrumenten mit grundsätzlichen Risiken verbunden ist. Aufgrund politischer, wirtschaftlicher oder sonstiger Veränderungen können selbst Standardwerte, insbesondere aber Nebenwerte, erhebliche Kursverluste, im schlimmsten Fall sogar einen Totalverlust erleiden. Darüber hinaus sind Engagements in den vorgestellten Anlagen manchmal mit Währungsrisiken verbunden. Gewinne der Vergangenheit sind keine Garantie für zukünftige Ergebnisse. Um die Risiken zu mindern, sollten Anleger ihr Vermögen generell diversifizieren und Verluste unabhängig voneinander begrenzen. Einzelne Positionen sollten etwa 10&nbsp;% des Portfolios nicht überschreiten.<br><br>
+      Die Autoren der Analysen legen offen, wenn sie selbst ein erhebliches finanzielles Interesse an einzelnen Finanzinstrumenten haben, die Gegenstand der Analyse sind.
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
